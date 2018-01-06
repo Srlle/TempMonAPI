@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{pageTitle}}</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function getData() {
+        var xhttp = new XMLHttpRequest();
+        // var APIURL = "https://peaceful-woodland-37987.herokuapp.com/path/" + "{{path}}"
+        var APIURL = "http://localhost:3000/sensorHist/" + "{{sensor_hash}}"
+        xhttp.open("GET", APIURL, false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+        var readings = JSON.parse(xhttp.responseText);
+        return readings;
+      }
+
+      function drawChart() {
+        var readingsObj = getData();
+
+        var rawReadingsArr = readingsObj.map(function(el) { return el });
+
+        var readingsArr = [];
+
+        rawReadingsArr.forEach(function(el) {
+          readingsArr.push([new Date(el.timestamp), el.temp])
+        });
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('datetime', "Time");
+        data.addColumn('number', 'Temp');
+        data.addRows(readingsArr);
+
+        var options = {
+          title: 'Fermentor Temperature',
+          legend: { position: 'bottom' },
+          gridlines: {
+            count: -1,
+            units: {
+              // days: {format: ['MMM dd']},
+              hours: {format: ['HH:mm', 'ha']},
+              minutes: {format: ['HH:mm', 'ha']},
+            }
+          },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('linechart_material'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+
+    <p>{{welcomeMsg}}</p>
+    <p>{{data}}</p>
+    <div id="linechart_material" style="width: 900px; height: 500px"></div>
+  </body>
+</html>
