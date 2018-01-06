@@ -10,8 +10,8 @@
 
       function getData() {
         var xhttp = new XMLHttpRequest();
-        // var APIURL = "https://peaceful-woodland-37987.herokuapp.com/path/" + "{{path}}"
-        var APIURL = "http://localhost:3000/sensorHist/" + "{{sensor_hash}}"
+        var APIURL = "https://lit-beyond-24276.herokuapp.com/sensor_hist/" + ""{{sensor_hash}}""
+        // var APIURL = "http://localhost:3000/sensor_hist/" + "{{sensor_hash}}"
         xhttp.open("GET", APIURL, false);
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send();

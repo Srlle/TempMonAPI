@@ -5,7 +5,7 @@
   "main": "APIserver.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node APIserver/APIserver.js"
+    "start": "node APIserver.js"
   },
   "author": "Srdjan Kovacevic",
   "license": "ISC",
